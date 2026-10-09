@@ -1,0 +1,48 @@
+name: Deploy to Yandex Cloud
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        submodules: true
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v3.0.0
+      with:
+        hugo-version: '0.155.2'
+        extended: true
+
+    - name: Build site
+      run: |
+        rm -rf public
+        hugo --minify
+
+    - name: Deploy HTML (правильный Content-Type)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ru-central1
+      run: |
+        aws s3 sync public/ s3://polygonysverdlovsk.ru/ \
+          --delete --acl public-read \
+          --exclude "*.css" --exclude "*.js" --exclude "*.xml" \
+          --exclude "*.json" --exclude "*.txt" \
+          --content-type "text/html; charset=utf-8" \
+          --endpoint-url https://storage.yandexcloud.net
+
+    - name: Deploy CSS/JS/etc (авто Content-Type)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ru-central1
+      run: |
+        aws s3 sync public/ s3://polygonysverdlovsk.ru/ \
+          --delete --acl public-read \
+          --exclude "*.html" \
+          --endpoint-url https://storage.yandexcloud.net

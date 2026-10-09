@@ -1,0 +1,57 @@
+baseURL = "https://polygonysverdlovsk.ru/"
+title = "Полигоны ТКО Свердловской области: факты и решения"
+theme = "PaperMod"
+defaultContentLanguage = "ru"
+relativeURLs = false
+enableRobotsTXT = true
+metaDataFormat = "yaml"
+summaryLength = 30
+
+[pagination]
+  pagerSize = 10
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[params]
+  title = "Полигоны ТКО Свердловской области"
+  description = "Достоверная информация о полигонах твёрдых коммунальных отходов в Свердловской области: технологии, экология, рекультивация."
+  author = "Редакция"
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  mainSections = ["blog"]
+  homeInfoParams = { Title = "Полигоны ТКО Свердловской области", Content = "Факты, технологии и экологические решения. Разбор мифов о мусорных полигонах." }
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "О проекте"
+    url = "/about/"
+    weight = 10
+  [[menu.main]]
+    identifier = "blog"
+    name = "Статьи"
+    url = "/blog/"
+    weight = 20
+  [[menu.main]]
+    identifier = "contact"
+    name = "Контакты"
+    url = "/contact/"
+    weight = 30
+
+[languages]
+  [languages.ru]
+    languageCode = "ru-ru"
+    languageName = "Русский"
+    weight = 1
+    title = "Полигоны ТКО Свердловской области"
