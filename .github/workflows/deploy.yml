@@ -46,3 +46,14 @@ jobs:
           --delete --acl public-read \
           --exclude "*.html" \
           --endpoint-url https://storage.yandexcloud.net
+
+    - name: Notify IndexNow
+      run: |
+        curl -X POST https://api.indexnow.org/IndexNow \
+          -H "Content-Type: application/json" \
+          -d '{
+            "host": "polygonysverdlovsk.ru",
+            "key": "${{ secrets.INDEXNOW_KEY }}",
+            "keyLocation": "https://polygonysverdlovsk.ru/${{ secrets.INDEXNOW_KEY }}.txt",
+            "urlList": ["https://polygonysverdlovsk.ru/"]
+          }'
